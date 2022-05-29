@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  test-netlink:
+    build: .
+    image: fluidog/test-netlink
+    cap_add:
+      - SYS_MODULE
+      
