@@ -1,9 +1,7 @@
 run: build
-	@echo "Running unix-socket client"
-	@echo $@
-
+	@echo "You should open two terminal.\nOne run ./service, then another run ./client."
 
 build clean: service client
 
 clean:
-	rm -f $^ *.o 
+	rm -f $^ *.o socket
