@@ -1,0 +1,11 @@
+[Unit]
+Description=hello world socket
+Before=hello-world.service
+Conflicts=hello-world.service
+
+[Socket]
+ListenStream=8867
+Accept=yes
+
+[Install]
+WantedBy=sockets.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=hello world - a test servie
+Requires=hello-world.service
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c "echo hello world && while true; do sleep 1; done"
+
+[Install]
+WantedBy=multi-user.target

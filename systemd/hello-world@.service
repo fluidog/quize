@@ -1,0 +1,12 @@
+[Unit]
+Description=hello world@@@ - a test servie
+
+
+[Service]
+Type=simple
+ExecStart=/root/workspace/quize/systemd/main
+StandardInput=socket
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target
