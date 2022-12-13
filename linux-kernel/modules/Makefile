@@ -1,3 +1,5 @@
+## Makefile for the Linux kernel module
+
 MODULE := hello_module
 FILES := main.o
 

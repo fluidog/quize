@@ -43,5 +43,5 @@ build-buildroot:
 
 
 create-img:
-	qemu-img create ${rootfs} 2G
+	qemu-img create ${rootfs} 4G
 	mkfs.ext4 ${rootfs}
