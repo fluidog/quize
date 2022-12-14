@@ -1,6 +1,6 @@
 ## Makefile for the Linux kernel module
 
-MODULE := kprobes_example
+MODULE := module_example
 FILES := main.o
 
 ifdef KERNELRELEASE
@@ -9,7 +9,6 @@ obj-m += $(MODULE).o
 $(MODULE)-m := $(FILES)
 
 else
-
 
 ifndef KDIR
 KDIR := /lib/modules/$(shell uname -r)/build
@@ -21,7 +20,7 @@ clean:
 	make -C $(KDIR) M=$(shell pwd) clean
 	rm -f $^
 
-run:
+run: build
 	insmod $(MODULE).ko
 	rmmod $(MODULE)
 endif

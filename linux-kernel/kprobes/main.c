@@ -77,4 +77,4 @@ module_exit(kprobe_exit);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("liuqi");
 MODULE_VERSION("v0.1");
-MODULE_DESCRIPTION("kprobe example");
+MODULE_DESCRIPTION("kprobes example");

@@ -1,6 +1,6 @@
 ## Makefile for the Linux kernel module
 
-MODULE := hello_module
+MODULE := timer_example
 FILES := main.o
 
 ifdef KERNELRELEASE
@@ -10,14 +10,14 @@ $(MODULE)-m := $(FILES)
 
 else
 
-ifndef KERNEL
-KERNEL := /lib/modules/$(shell uname -r)/build
+ifndef KDIR
+KDIR := /lib/modules/$(shell uname -r)/build
 endif
 
 build:
-	make -C $(KERNEL) M=$(shell pwd) modules
+	make -C $(KDIR) M=$(shell pwd) modules
 clean:
-	make -C $(KERNEL) M=$(shell pwd) clean
+	make -C $(KDIR) M=$(shell pwd) clean
 	rm -f $^
 
 run: build

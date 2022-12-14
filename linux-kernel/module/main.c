@@ -26,4 +26,4 @@ module_exit(exit_main);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("liuqi");
 MODULE_VERSION("v0.1");
-MODULE_DESCRIPTION("example");
+MODULE_DESCRIPTION("module example");
