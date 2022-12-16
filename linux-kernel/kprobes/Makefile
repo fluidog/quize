@@ -1,12 +1,12 @@
 ## Makefile for the Linux kernel module
 
 MODULE := kprobes_example
-FILES := main.o
+FILES := main.c
 
 ifdef KERNELRELEASE
 
 obj-m += $(MODULE).o
-$(MODULE)-m := $(FILES)
+$(MODULE)-m := $(FILES:%.c=%.o)
 
 else
 

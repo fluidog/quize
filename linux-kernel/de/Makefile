@@ -12,7 +12,7 @@ rootfs := $(shell pwd)/output/rootfs.img
 linux := $(linux-out)/arch/x86_64/boot/bzImage
 # linux := $(shell pwd)/output/buildroot/images/bzImage
 
-
+# 
 run-qemu:
 	qemu-system-x86_64 \
 		-kernel ${linux} \
@@ -21,10 +21,7 @@ run-qemu:
 		-net nic -net tap,ifname=tap0,script=no \
 		-m 2G \
 		-smp 4 \
-		-nographic
-		
-# -net nic,model=virtio -net user \	
-# -net tap,ifname=tap0,script=no,downscript=no \
+		-nographic -s
 
 build-linux:
 	make -C ${linux-src} O=${linux-out} x86_64_defconfig && \

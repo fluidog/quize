@@ -1,6 +1,6 @@
 ## Makefile for the Linux kernel module
 
-MODULE := module_example
+MODULE := access_process_memory_example
 FILES := main.c
 
 ifdef KERNELRELEASE

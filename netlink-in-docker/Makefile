@@ -1,11 +1,11 @@
 
 MODULE := test-netlink-kernel
-FILES := kernel.o
+FILES := kernel.c
 
 ifdef KERNELRELEASE 
 
 obj-m += $(MODULE).o
-$(MODULE)-m := $(FILES)
+$(MODULE)-m := $(FILES:%.c=%.o)
 
 else
 

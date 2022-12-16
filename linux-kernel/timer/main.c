@@ -32,7 +32,6 @@ static void timer_handler(struct timer_list *t)
 	pr_debug("timer handler end.\n");
 }
 
-
 int __init init_main(void)
 {
 	int error = 0;
