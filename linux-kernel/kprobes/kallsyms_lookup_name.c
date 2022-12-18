@@ -25,13 +25,14 @@ unsigned long ksyms_kallsyms_lookup_name(const char *name)
 #if LINUX_VERSION_CODE < KERNEL_VERSION(5,7,0)
 	_kallsyms_lookup_name = kallsyms_lookup_name;
 #else
-	struct kprobe kp = {
+	struct kprobe kp;
+	kp = (struct kprobe) {
 		.symbol_name = "kallsyms_lookup_name",
 	};
 
 	if (register_kprobe(&kp) < 0) {
 		pr_err("kallsyms_lookup_name not found by kprobe");
-		return 0;
+		return -ENXIO;
 	}
 
 	_kallsyms_lookup_name = (typeof(_kallsyms_lookup_name))kp.addr;
