@@ -1,0 +1,17 @@
+## Makefile for build rpm package.
+
+# Define the variables of "PKG" according to your needs.
+
+PKG ?= demo
+SPEC-FILE ?= $(PKG).spec
+TAR-FILE ?= $(PKG).tar.gz
+
+build:rpm-pkg tar-pkg
+
+rpm-pkg:
+	rpmbuild --noprep --build-in-place --define="_topdir $$PWD/rpmbuild" -bb $(SPEC-FILE)
+tar-pkg:
+	tar -czf $(TAR-FILE) --exclude-vcs-ignores --exclude-vcs *
+
+clean:
+	rm -rf rpmbuild $(TAR_FILE)

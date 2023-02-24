@@ -35,7 +35,6 @@ static void timer_handler(struct timer_list *t)
 int __init init_main(void)
 {
 	int error = 0;
-	pr_info("Hello module\n");
 
 	timer.expires = jiffies + msecs_to_jiffies(timer_interval);
 	add_timer(&timer);
@@ -44,19 +43,7 @@ int __init init_main(void)
 	return error;
 }
 
-
 void __exit exit_main(void)
 {
 	del_timer(&timer);
-
-	pr_info("Goodbye module!\n");
 }
-
-
-module_init(init_main);
-module_exit(exit_main);
-
-MODULE_LICENSE("GPL");
-MODULE_AUTHOR("liuqi");
-MODULE_VERSION("v0.1");
-MODULE_DESCRIPTION("timer example");

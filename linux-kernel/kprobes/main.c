@@ -44,7 +44,7 @@ static void handler_post(struct kprobe *p, struct pt_regs *regs,
 }
 
 
-static int __init kprobe_init(void)
+int __init init_main(void)
 {
 	int ret;
 
@@ -64,17 +64,8 @@ static int __init kprobe_init(void)
 	return 0;
 }
 
-static void __exit kprobe_exit(void)
+void __exit exit_main(void)
 {
 	unregister_kprobe(&kp);
 	pr_info("kprobe at %p unregistered\n", kp.addr);
 }
-
-module_init(kprobe_init);
-module_exit(kprobe_exit);
-
-
-MODULE_LICENSE("GPL");
-MODULE_AUTHOR("liuqi");
-MODULE_VERSION("v0.1");
-MODULE_DESCRIPTION("kprobes example");

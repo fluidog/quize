@@ -148,12 +148,3 @@ void __exit exit_main(void)
 {
 	pr_info("Goodbye module!\n");
 }
-
-
-module_init(init_main);
-module_exit(exit_main);
-
-MODULE_LICENSE("GPL");
-MODULE_AUTHOR("liuqi");
-MODULE_VERSION("v0.1");
-MODULE_DESCRIPTION("access_process_memory example");

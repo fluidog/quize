@@ -2,7 +2,6 @@
 #define pr_fmt(fmt) "%s: " fmt, __func__
 
 #include <linux/kernel.h>
-#include <linux/module.h>
 
 #include <linux/slab.h>
 
@@ -63,7 +62,6 @@ void print_data(void)
 int __init init_main(void)
 {
 	int error = 0;
-	pr_info("Hello module!\n");
 	add_data(1);
 	add_data(25);
 	add_data(38);
@@ -81,20 +79,4 @@ void __exit exit_main(void)
 
 	clear_data();
 	print_data();
-
-
-	pr_info("Goodbye module!\n");
 }
-
-
-#ifdef MODULE
-module_init(init_main);
-#else
-late_initcall_sync(init_main);
-#endif
-module_exit(exit_main);
-
-MODULE_LICENSE("GPL");
-MODULE_AUTHOR("liuqi");
-MODULE_VERSION("v0.1");
-MODULE_DESCRIPTION("list example");

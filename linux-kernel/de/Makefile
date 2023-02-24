@@ -19,9 +19,11 @@ run-qemu:
 		-append "root=/dev/sda rw console=ttyS0 nokaslr" \
 		-hda ${rootfs} \
 		-net nic -net tap,ifname=tap0,script=no \
-		-m 2G \
-		-smp 4 \
-		-nographic -s
+		--enable-kvm -cpu host\
+		-m 8G \
+		-smp 8 \
+		-s \
+		-display none -serial mon:stdio 
 
 build-linux:
 	make -C ${linux-src} O=${linux-out} x86_64_defconfig && \
@@ -40,5 +42,5 @@ build-buildroot:
 
 
 create-img:
-	qemu-img create ${rootfs} 4G
+	qemu-img create -f qcow2 ${rootfs} 256G
 	mkfs.ext4 ${rootfs}
