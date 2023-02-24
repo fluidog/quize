@@ -23,14 +23,19 @@ $(TARGET)-m := $(FILES:%.c=%.o)
 
 else
 
-KDIR ?= /lib/modules/$(shell uname -r)/build
+KERNELDIR ?= /lib/modules/$(shell uname -r)/build
+INSTALLDIR ?= /lib/modules/$(shell uname -r)/updates
 
 build:
-	make -C $(KDIR) M=$(shell pwd) modules
+	make -C $(KERNELDIR) M=$(shell pwd) modules
 clean:
-	make -C $(KDIR) M=$(shell pwd) clean
+	make -C $(KERNELDIR) M=$(shell pwd) clean
 
-test: build
+install:
+	install -d $(DESTDIR)$(INSTALLDIR)
+	install -m 644 $(TARGET).ko $(DESTDIR)$(INSTALLDIR)
+
+test:
 	insmod $(TARGET).ko
 	rmmod $(TARGET)
 

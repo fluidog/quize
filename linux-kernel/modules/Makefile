@@ -12,5 +12,8 @@ build:
 clean:
 	make -f Kbuild clean
 
+install:
+	make -f Kbuild install
+
 test:
 	make -f Kbuild test
