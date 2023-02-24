@@ -9,7 +9,7 @@
  * @copyright Copyright (c) 2022
  * 
  */
-#define DEBUG
+
 #define pr_fmt(fmt) "%s: " fmt, __func__
 
 #include <linux/kernel.h>
@@ -40,4 +40,12 @@ unsigned long ksyms_kallsyms_lookup_name(const char *name)
 #endif
 
 	return _kallsyms_lookup_name(name);
+}
+
+int init_main(void)
+{
+	void *addr;
+	addr = ksyms_kallsyms_lookup_name("find_module");
+	pr_info("find_module addr: %px", addr);
+	return 0;
 }
