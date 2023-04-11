@@ -6,9 +6,6 @@
 # 	TARGET := hello-example
 # 	FILES := test1.c test2.c test3.c
 #
-#   obj-m += $(TARGET).o
-#	$(TARGET)-m := $(FILES:%.c=%.o)
-#
 ####################################################
 
 TARGET ?= hello-example

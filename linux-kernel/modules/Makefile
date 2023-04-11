@@ -1,4 +1,3 @@
-
 TARGET ?= $(notdir $(CURDIR))
 FILES ?= $(wildcard *.c)
 
