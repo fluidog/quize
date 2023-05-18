@@ -101,13 +101,13 @@ int walk_process_mmaps(int vpid, int (*func)(struct task_struct *, struct vm_are
 
 
 // example functions
-static int example_access_vm_cb(struct task_struct *task, char *buffer, unsigned long size, void * private)
+static int simple_access_vm_cb(struct task_struct *task, char *buffer, unsigned long size, void * private)
 {
 	print_hex_dump(KERN_DEBUG, "", DUMP_PREFIX_OFFSET, 16, 4, buffer, size, true);
 	return 0;
 }
 
-static int example_access_mmap_cb(struct task_struct *task, struct vm_area_struct *mmap)
+static int simple_access_mmap_cb(struct task_struct *task, struct vm_area_struct *mmap)
 {
 	unsigned int length;
 
@@ -124,12 +124,12 @@ static int example_access_mmap_cb(struct task_struct *task, struct vm_area_struc
 	// 	mmap->vm_start, mmap->vm_end, mmap->vm_pgoff, \
 	// 	mmap->vm_flags, length );
 
-	return walk_process_vm(task, mmap, NULL, example_access_vm_cb);
+	return walk_process_vm(task, mmap, NULL, simple_access_vm_cb);
 }
 
-int example_access_process_memory(int vpid)
+int simple_access_process_memory(int vpid)
 {
-	return walk_process_mmaps(vpid, example_access_mmap_cb);
+	return walk_process_mmaps(vpid, simple_access_mmap_cb);
 }
 
 
@@ -138,7 +138,7 @@ int __init init_main(void)
 	int error = 0;
 	pr_info("Hello module!\n");
 
-	example_access_process_memory(pid);
+	simple_access_process_memory(pid);
 
 	return error;
 }
