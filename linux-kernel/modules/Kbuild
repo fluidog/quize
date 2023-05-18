@@ -20,13 +20,13 @@ $(TARGET)-m := $(FILES:%.c=%.o)
 
 else
 
-KERNELDIR ?= /lib/modules/$(shell uname -r)/build
+KDIR ?= /lib/modules/$(shell uname -r)/build
 INSTALLDIR ?= /lib/modules/$(shell uname -r)/updates
 
 build:
-	make -C $(KERNELDIR) M=$(shell pwd) modules
+	make -C $(KDIR) M=$(shell pwd) modules
 clean:
-	make -C $(KERNELDIR) M=$(shell pwd) clean
+	make -C $(KDIR) M=$(shell pwd) clean
 
 install:
 	install -d $(DESTDIR)$(INSTALLDIR)
