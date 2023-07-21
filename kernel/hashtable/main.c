@@ -28,8 +28,8 @@ struct my_data
 int add_data(int key)
 {
 	struct my_data *data = kmalloc(sizeof(*data), GFP_KERNEL);
-	if (!data)
-		return -ENOMEM;
+	if (IS_ERR_OR_NULL(data))
+        return PTR_ERR(data) ?: -1;
 
 	data->key = key;
 	hash_add(my_head, &data->hlist_node, key);

@@ -8,19 +8,22 @@ with_debug ?=0
 with_display ?= 0
  with_vnc ?= 0
 
-# cpu core and memory
+# cpu and memory
 BASE ?= -smp $(shell nproc) -m 4G
 EXTPARM ?=
 
 # if install iso, you should define ISO
 ifeq ($(MAKECMDGOALS),install)
-  ISO ?=
-  ifeq ($(ISO),)
-    $(error "ISO is not defined")
-  endif
+  with_display := 1
+  ISO ?= $(firstword $(wildcard *.iso))
+  $(warning Install $(ISO))
   # use the name of ISO as the name of IMG
   IMG ?= $(basename $(notdir $(ISO))).img
   INSTALL := -boot d -cdrom $(ISO)
+else ($(MAKECMDGOALS),download_cloud_img)
+  RELEASE ?= jammy
+  $(warning Download cloud image of $(RELEASE))
+  IMG ?= $(RELEASE).img
 else
   IMG ?= $(firstword $(wildcard *.img))
 endif
@@ -61,18 +64,25 @@ run:
 		$(EXTPARM)
 
 
-install: run create_img
+install: create_img run
 
 create_img:
-	qemu-img create $(IMG) 128G
-	mkfs.ext4 $(IMG)
+	qemu-img create -f qcow2 $(IMG) 128G
+
+download_cloud_img: $(RELEASE)-server-cloudimg-amd64.img
+	curl -L -o $(IMG) \
+	https://cloud-images.ubuntu.com/$(RELEASE)/current/$(RELEASE)-server-cloudimg-amd64.img
 
 help:
-	@echo 'run: run the IMG'
-	@echo '	$$IMG: image file, default is the first *.img in current directory'
-	@echo '	$$KERNEL: kernel file'
-	@echo 'install: install a new os'
-	@echo '	$$ISO: install iso file, specify it when you want to install a new os'
-	@echo 'help: print this message'
+	@echo 'Target:'
+	@echo ' run		- run the $$IMG'
+	@echo ' install	- install a new os'
+	@echo ' download_cloud_img	- download a cloud image of $$RELEASE from ubuntu.com'
+	@echo ' help		- print this message'
+	@echo 'Enviroment:'
+	@echo ' $$ISO		- install iso file, specify it when you want to install a new os'
+	@echo ' $$IMG		- image file, default is the first *.img in current directory'
+	@echo ' $$RELEASE	- release name, default is jammy'
+	@echo ' $$KERNEL	- kernel file'
 
-.PHONY: run create_img help
+.PHONY: run create_img help download_cloud_img

@@ -15,7 +15,7 @@ void __weak exit_main(void)
 
 int __init module_init_main(void)
 {
-	pr_debug("Hello world!\n");
+	pr_debug("Hello %s!\n", THIS_MODULE->name);
 	
 	return init_main();
 }
@@ -23,7 +23,7 @@ int __init module_init_main(void)
 void __exit module_exit_main(void)
 {
 	exit_main();
-	pr_debug("Goodbye world!\n");
+	pr_debug("Goodbye %s!\n", THIS_MODULE->name);
 }
 
 #ifdef MODULE
@@ -32,6 +32,7 @@ module_init(module_init_main);
 late_initcall_sync(module_init_main);
 #endif
 module_exit(module_exit_main);
+
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("liuqi");

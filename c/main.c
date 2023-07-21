@@ -3,15 +3,13 @@
 
 #include <unistd.h>
 
-int main()
+int main(int argc, char* argv[])
 {
-	int i = 0,x = 1000;
-	char cwdbuf[100];
-	char *p = getcwd(cwdbuf,100);
-	for(i = 0; i< 1000; i++)
-	{
-		printf("hello world:%s\n",p);
-		x--;
-	}
+	printf("name: %s\n", argv[0]);
+
+	for(int i = 1; i < argc; i++)
+		printf("arg[%d]: %s\n", i, argv[i]);
+
 	return 0;
 }
+

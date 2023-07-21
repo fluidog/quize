@@ -15,8 +15,9 @@ struct my_data
 int add_data(int value)
 {
 	struct my_data *data = kmalloc(sizeof(*data), GFP_KERNEL);
-	if (!data)
-		return -ENOMEM;
+	if (IS_ERR_OR_NULL(data))
+        return PTR_ERR(data) ?: -1;
+
 	data->value = value;
 
 	list_add(&data->list_node, &my_head);

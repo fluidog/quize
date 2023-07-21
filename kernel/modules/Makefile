@@ -15,4 +15,5 @@ install:
 	make -f Kbuild install
 
 test:
-	make -f Kbuild test
+	insmod $(TARGET).ko
+	rmmod $(TARGET)
