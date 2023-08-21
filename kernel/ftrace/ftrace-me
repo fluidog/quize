@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Single thread tracing
+# Usage: ftrace-me <command>
+
+tracefs=`grep debugfs /proc/mounts | awk '{ print $2; }'`/tracing
+
+echo 0 > $tracefs/tracing_on
+
+# filter <current-pid>
+echo $$ > $tracefs/set_ftrace_pid
+
+# echo function > $tracefs/current_tracer
+# # filter <function>
+# echo '__x64_sys_openat' >> $tracefs/set_ftrace_filter
+
+echo function_graph > $tracefs/current_tracer
+# filter <function>
+# echo __x64_sys_openat > $tracefs/set_graph_function
+
+
+echo 0 > $tracefs/trace # clear trace buffer
+echo 1 > $tracefs/tracing_on
+
+exec "$@"

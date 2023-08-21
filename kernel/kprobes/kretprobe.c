@@ -9,8 +9,6 @@
 
 #include <linux/kprobes.h>
 
-int test(int a, int b);
-
 /* per-instance private data */
 struct my_data
 {
@@ -20,6 +18,10 @@ struct my_data
 static int entry_handler(struct kretprobe_instance *ri, struct pt_regs *regs)
 {
     struct my_data *data;
+
+    // only 'cat' command
+    if(strcmp(current->comm, "cat") != 0)
+        return 0;
 
     if (!current->mm)
         return 1; /* Skip kernel threads */
@@ -41,6 +43,9 @@ static int ret_handler(struct kretprobe_instance *ri, struct pt_regs *regs)
     s64 delta;
     ktime_t now;
 
+    if(strcmp(current->comm, "cat") != 0)
+        return 0;
+
     now = ktime_get();
     delta = ktime_to_ns(ktime_sub(now, data->entry_stamp));
 
@@ -55,13 +60,12 @@ static struct kretprobe my_kretprobe = {
     .data_size = sizeof(struct my_data),
     /* Probe up to 20 instances concurrently. */
     .maxactive = 20,
-    .kp.symbol_name = "test",
+    .kp.symbol_name = "__x64_sys_openat",
 };
 
-int test_kretprobe(void)
+int init_test_kretprobe(void)
 {
     int ret;
-
     ret = register_kretprobe(&my_kretprobe);
     if (ret < 0)
     {
@@ -71,9 +75,10 @@ int test_kretprobe(void)
 
     pr_info("Planted kernel return probe at %px", my_kretprobe.kp.addr);
 
-    test(5, 46);
-
-    unregister_kretprobe(&my_kretprobe);
-
     return 0;
+}
+
+void exit_test_kretprobe(void)
+{
+    unregister_kretprobe(&my_kretprobe);
 }
