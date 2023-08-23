@@ -1,4 +1,3 @@
-#define pr_fmt(fmt) "%s: " fmt, __func__
 #include <linux/kernel.h>
 
 int init_test_kprobe(void);

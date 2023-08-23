@@ -1,6 +1,3 @@
-#define DEBUG
-#define pr_fmt(fmt) "%s: " fmt, __func__
-
 #include <linux/kernel.h>
 #include <linux/module.h>
 
@@ -15,7 +12,7 @@ void __weak exit_main(void)
 
 int __init module_init_main(void)
 {
-	pr_debug("Hello %s!\n", THIS_MODULE->name);
+	pr_debug("Hello world!\n");
 	
 	return init_main();
 }
@@ -23,7 +20,7 @@ int __init module_init_main(void)
 void __exit module_exit_main(void)
 {
 	exit_main();
-	pr_debug("Goodbye %s!\n", THIS_MODULE->name);
+	pr_debug("Goodbye world!\n");
 }
 
 #ifdef MODULE

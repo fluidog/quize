@@ -1,5 +1,3 @@
-#define pr_fmt(fmt) "%s: " fmt, __func__
-
 #include <linux/kernel.h>
 #include <linux/list.h>
 #include <linux/slab.h>
@@ -60,7 +58,7 @@ void print_data(void)
 	}
 }
 
-int __init init_main(void)
+int init_main(void)
 {
 	pr_info("add 1, 25, 38\n");
 	add_data(1);

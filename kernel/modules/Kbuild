@@ -1,22 +1,30 @@
 ## Makefile for the Linux kernel module.
 
-# Define the variables of "TARGET、FILE" according to your needs.
+# Overwrite the variables of "TARGET、FILE..." 
+#	in "./.Kbuild.cfg" according to your needs.
 #
 # example:
-# 	TARGET := hello-example
-# 	FILES := test1.c test2.c test3.c
-#
+# 	TARGET := module_name
+# 	FILES := source1.c source2.c source3.c
+#	ccflags-y := -DDEBUG
+#	CFLAGS_<source1>.o := -DDEBUG
 ####################################################
+-include $(PWD)/.Kbuild.cfg
 
-TARGET ?= hello-example
-FILES ?= main.c
+# module name
+TARGET ?= $(notdir $(PWD))
+# source files
+FILES ?= $(notdir $(wildcard $(PWD)/*.c))
 
 ifdef KERNELRELEASE
 
-obj-m += $(TARGET).o
-$(TARGET)-m := $(FILES:%.c=%.o)
+# ccflags-y := -DDEBUG
+# CFLAGS_<file>.o := -DDEBUG
 
-# $(warning obj-m="$(obj-m)" $(TARGET)-m="$($(TARGET)-m)" )
+obj-m += $(TARGET).o
+$(TARGET)-y := $(FILES:%.c=%.o)
+
+# $(warning pwd="$(PWD)" obj-m="$(obj-m)" $(TARGET)-y="$($(TARGET)-y)" )
 
 else
 
@@ -24,9 +32,14 @@ KDIR ?= /lib/modules/$(shell uname -r)/build
 INSTALLDIR ?= /lib/modules/$(shell uname -r)/updates
 
 build:
-	make -C $(KDIR) M=$(shell pwd) modules
+	make -C $(KDIR) M=$(PWD) modules
+
 clean:
-	make -C $(KDIR) M=$(shell pwd) clean
+	make -C $(KDIR) M=$(PWD) clean
+
+test:
+	insmod $(TARGET).ko dyndbg="+p"
+	rmmod $(TARGET)
 
 install:
 	install -d $(DESTDIR)$(INSTALLDIR)

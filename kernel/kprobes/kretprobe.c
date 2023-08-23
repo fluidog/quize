@@ -7,8 +7,6 @@
 #include <linux/ktime.h>
 #include <linux/types.h>
 
-#include <linux/kprobes.h>
-
 /* per-instance private data */
 struct my_data
 {

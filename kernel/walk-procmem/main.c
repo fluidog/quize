@@ -45,7 +45,7 @@ int walk_process_vm(struct task_struct *task, struct vm_area_struct *mmap,
         size = length > PAGE_SIZE ? PAGE_SIZE : length;
         rc = access_process_vm(task, vm_start, buffer, size, FOLL_REMOTE);
         if (rc <= 0) {
-            pr_err("access process vm failed at %p (len:0x%x)", (void *)vm_start, size);
+            pr_err("access process vm failed at 0x%px (len:%d)", (void *)vm_start, size);
             return rc;
         }
         // do something with buffer...
@@ -116,9 +116,9 @@ static int simple_access_mmap_cb(struct task_struct *task, struct vm_area_struct
     if (IS_ERR_OR_NULL(buf))
         return PTR_ERR(buf) ?: -1;
 
-    pr_debug("path: %s, start: %lx, end: %lx, pgoff: %lx, flags: %lx",
+    pr_debug("path: %s, start: %px, end: %px, pgoff: %ld, flags: %lx",
              d_path(&mmap->vm_file->f_path, buf, 256),
-             mmap->vm_start, mmap->vm_end, mmap->vm_pgoff,
+             (void *)mmap->vm_start, (void *)mmap->vm_end, mmap->vm_pgoff,
              mmap->vm_flags);
     kfree(buf);
 

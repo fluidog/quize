@@ -64,6 +64,7 @@ static struct proc_ops my_file_ops={
     // .proc_write = my_proc_write
 };
 
+
 int init_main(void)
 {
     struct proc_dir_entry *entry;
