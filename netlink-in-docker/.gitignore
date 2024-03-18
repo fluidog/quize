@@ -1,7 +1,0 @@
-*.ko
-*.mod*
-*.cmd
-Module.symvers
-modules.order
-test-netlink-user
-!.dockerignore
